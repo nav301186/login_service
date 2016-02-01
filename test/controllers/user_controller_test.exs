@@ -2,7 +2,7 @@ defmodule LoginService.UserControllerTest do
   use LoginService.ConnCase
 
   alias LoginService.User
-  @valid_attrs %{age: 42, gender: "some content", name: "some content"}
+  @valid_attrs %{age: 42, gender: "some content", name: "some content", email: "nav@gmail.com", crypted_password: "123456"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -48,7 +48,7 @@ defmodule LoginService.UserControllerTest do
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    user = Repo.insert! %User{}
+    user = Repo.insert! %User{email: "xyz@gmail.com"}
     conn = put conn, user_path(conn, :update, user), user: @invalid_attrs
     assert json_response(conn, 422)["errors"] != %{}
   end

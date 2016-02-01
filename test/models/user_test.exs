@@ -3,10 +3,12 @@ defmodule LoginService.UserTest do
 
   alias LoginService.User
 
-  @valid_attrs %{age: 42, gender: "some content", name: "some content"}
+
+  @valid_attrs %{email: "nav@gmail.com", password: Comeonin.Bcrypt.hashpwsalt("123456"),age: 42, gender: "M", name: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
+    IO.puts "Testing the change set"
     changeset = User.changeset(%User{}, @valid_attrs)
     assert changeset.valid?
   end

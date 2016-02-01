@@ -17,3 +17,13 @@ config :login_service, LoginService.Repo,
   database: "ums_development",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+
+  config :guardian, Guardian,
+          issuer: "LoginService",
+          allowed_algos: ["HS512"],
+          verify_module: Guardian.JWT,
+          ttl: {30, :days },
+          verify_issuer: true,
+          secret_key: "wWJxTwhe0ccfmgHpNBJTmbd5Zrc2bXvDCa2BtLRW8GjTYaN",
+          serializer: LoginService.GuardianSerializer

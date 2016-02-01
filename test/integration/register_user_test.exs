@@ -3,8 +3,8 @@ defmodule RegisterUserIntegrationTest do
   alias LoginService.Router
 
   setup do
-      conn = conn() |> put_req_header("accept", "application/json")
-      {:ok, conn: conn}
+      
+  {:ok, conn: conn}
     end
 
 
