@@ -2,62 +2,79 @@ defmodule LoginService.UserController do
   use LoginService.Web, :controller
 
   alias LoginService.User
+  alias LoginService.GuardianHelper
 # If the plug cannot find a verified token for the connection,
 # it calls the on_failure function.
  # This function should be arity 2 and receive a Plug.
  # Conn.t and it’s params. It’s up to this function
  # to handle what should happen when things go south.
-  # plug Guardian.Plug.EnsureAuthenticated, %{ on_failure: {:error, "Error Ocurred"}} when not action in [:new, :create]
+ plug Guardian.Plug.EnsureAuthenticated , handler: LoginService.ErrorHandler
 
-  plug :scrub_params, "user" when not action in [:create, :update]
+  plug :scrub_params, "user" when not action in [:delete, :show]
 
-  def index(conn, _params) do
-    users = Repo.all(User)
-    render(conn, "index.json", users: users)
+  def show(conn, _params) do
+      token = List.first(get_req_header(conn, "authorization"));
+
+       case  Guardian.decode_and_verify(token) do
+         { :ok, claims } ->
+                           case Guardian.serializer.from_token(claims["sub"]) do
+                             { :ok, resource } ->
+                                               user = Repo.get!(User, resource.id)
+                                              conn
+                                              |> put_status(200)
+                                              |> render("show.json", user: user)
+                             { :error, reason } -> conn |> put_status(502)
+                           end
+
+         { :error, reason } -> conn
+                                    |> put_status(502)
+                                    |> render("error.json")
+       end
   end
 
-  def create(conn, %{"user" => user_params}) do
-    changeset = User.changeset(%User{}, user_params)
+  def update(conn, %{"user" => user_params}) do
+    token = List.first(get_req_header(conn, "authorization"));
 
-    case Repo.insert(changeset) do
-      {:ok, user} ->
-        conn
-        |> put_status(:created)
-        |> put_resp_header("location", user_path(conn, :show, user))
-        |> render("show.json", user: user)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(LoginService.ChangesetView, "error.json", changeset: changeset)
-    end
+     case  Guardian.decode_and_verify(token) do
+
+       { :ok, claims } ->
+                         case Guardian.serializer.from_token(claims["sub"]) do
+                           { :ok, resource } ->
+                                                 user = Repo.get!(User, resource.id)
+
+                                                 changeset = User.changeset(user, user_params)
+
+                                                 case Repo.update(changeset) do
+                                                   {:ok, user} ->
+                                                     render(conn, "show.json", user: user)
+                                                   {:error, changeset} ->
+                                                     conn
+                                                     |> put_status(502)
+                                                     |> render(LoginService.ChangesetView, "error.json", changeset: changeset)
+                                                 end
+
+                           { :error, reason } -> conn |> put_status(:unprocessable_entity)
+                         end
+
+       { :error, reason } -> conn |> put_status(:unprocessable_entity)
+     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
-    render(conn, "show.json", user: user)
+  def delete(conn, _params) do
+
+    token = List.first(get_req_header(conn, "authorization"));
+
+     case  Guardian.decode_and_verify(token) do
+       { :ok, claims } ->
+                         case Guardian.serializer.from_token(claims["sub"]) do
+                           { :ok, resource } ->
+                                                 user = Repo.get!(User, resource.id)
+                                                 Repo.delete!(user)
+                                                 send_resp(conn, :no_content, "")
+
+                           { :error, reason } -> conn |> put_status(:unprocessable_entity)
+                         end
+       { :error, reason } -> conn |> put_status(:unprocessable_entity)
   end
-
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Repo.get!(User, id)
-    changeset = User.changeset(user, user_params)
-
-    case Repo.update(changeset) do
-      {:ok, user} ->
-        render(conn, "show.json", user: user)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(LoginService.ChangesetView, "error.json", changeset: changeset)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(user)
-
-    send_resp(conn, :no_content, "")
-  end
+end
 end

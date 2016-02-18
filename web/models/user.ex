@@ -13,8 +13,8 @@ defmodule LoginService.User do
     timestamps
   end
 
-  @required_fields ~w(name age gender)
-  @optional_fields ~w()
+  @required_fields ~w(email)
+  @optional_fields ~w(name age gender)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -25,5 +25,9 @@ defmodule LoginService.User do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    # |> unique_constraints(:email)
+    # |> validate_format(:email, -r/@/)
+    # |> validate_length(:password, min: 5)
   end
+
 end

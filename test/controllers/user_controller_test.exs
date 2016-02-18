@@ -9,53 +9,49 @@ defmodule LoginService.UserControllerTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  test "lists all entries on index", %{conn: conn} do
-    conn = get conn, user_path(conn, :index)
-    assert json_response(conn, 200)["data"] == []
-  end
-
   test "shows chosen resource", %{conn: conn} do
-    user = Repo.insert! %User{}
-    conn = get conn, user_path(conn, :show, user)
-    assert json_response(conn, 200)["data"] == %{"id" => user.id,
-      "name" => user.name,
-      "age" => user.age,
-      "gender" => user.gender}
+    password = "password"
+    user = Repo.insert! %User{email: "example1@gmail.com",password: password }
+
+    {:ok, jwt, _} = Guardian.encode_and_sign(user, :token)
+
+    conn = conn |> put_req_header("authorization",jwt)
+    conn = get conn, user_path(conn, :show)
+    assert json_response(conn, 200)
   end
 
-  test "does not show resource and instead throw error when id is nonexistent", %{conn: conn} do
-    assert_error_sent 404, fn ->
-      get conn, user_path(conn, :show, -1)
-    end
-  end
+  test "does not show resource and instead throw error when token is not valid", %{conn: conn} do
+    password = "password"
+    user = Repo.insert! %User{email: "example1@gmail.com",password: password }
 
-  test "creates and renders resource when data is valid", %{conn: conn} do
-    conn = post conn, user_path(conn, :create), user: @valid_attrs
-    assert json_response(conn, 201)["data"]["id"]
-    assert Repo.get_by(User, @valid_attrs)
-  end
+    conn = conn |> put_req_header("authorization","InvalidToken")
+                |> put_req_header("content-type", "application/json" )
 
-  test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, user_path(conn, :create), user: @invalid_attrs
-    assert json_response(conn, 422)["errors"] != %{}
+    conn =   get conn, user_path(conn, :show)
+    assert json_response(conn, 401)
   end
 
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
-    user = Repo.insert! %User{}
-    conn = put conn, user_path(conn, :update, user), user: @valid_attrs
-    assert json_response(conn, 200)["data"]["id"]
-    assert Repo.get_by(User, @valid_attrs)
-  end
+    password = "password"
+    user = Repo.insert! %User{email: "example1@gmail.com",password: password }
+    # updated_user = %User{email: "example1@gmail.com",password: password, name: "Jon Doe" }
 
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    user = Repo.insert! %User{email: "xyz@gmail.com"}
-    conn = put conn, user_path(conn, :update, user), user: @invalid_attrs
-    assert json_response(conn, 422)["errors"] != %{}
+    {:ok, jwt, _} = Guardian.encode_and_sign(user, :token)
+
+    conn = conn |> put_req_header("authorization",jwt)
+    conn = put conn, user_path(conn, :update, %{"user" => %{name: "Jon Doe"}})
+    assert json_response(conn, 200)["data"]["name"] == "Jon Doe"
+    # assert Repo.get_by(User, @valid_attrs)
   end
 
   test "deletes chosen resource", %{conn: conn} do
-    user = Repo.insert! %User{}
-    conn = delete conn, user_path(conn, :delete, user)
+    password = "password"
+    user = Repo.insert! %User{email: "example1@gmail.com",password: password }
+
+    {:ok, jwt, _} = Guardian.encode_and_sign(user, :token)
+
+    conn = conn |> put_req_header("authorization",jwt)
+    conn = delete conn, user_path(conn, :delete)
     assert response(conn, 204)
     refute Repo.get(User, user.id)
   end

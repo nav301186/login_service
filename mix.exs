@@ -19,7 +19,7 @@ defmodule LoginService.Mixfile do
   def application do
     [mod: {LoginService, []},
      applications: [:phoenix, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :mariaex]]
+                    :phoenix_ecto, :mariaex, :comeonin, :guardian]]
   end
 
   # Specifies which paths to compile per environment.
@@ -36,7 +36,9 @@ defmodule LoginService.Mixfile do
      {:cowboy, "~> 1.0"},
      {:poison, "~> 1.5"},
      {:guardian, "~> 0.9.0"},
-     {:mariaex, "~> 0.5"}]
+     {:comeonin, "~> 2.1"},
+     {:mariaex, "~> 0.5"},
+     { :exrm, "~> 0.14.2" }]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

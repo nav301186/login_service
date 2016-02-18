@@ -9,9 +9,11 @@ use Mix.Config
 config :login_service, LoginService.Endpoint,
   http: [port: 4000],
   debug_errors: true,
-  code_reloader: true,
+  code_reloader: false,
   check_origin: false,
   watchers: []
+
+
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

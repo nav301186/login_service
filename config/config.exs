@@ -12,7 +12,8 @@ config :login_service, LoginService.Endpoint,
   secret_key_base: "M6e4xpMsKHA/cV9eZzUG0NPpucDIo2Zv0onbxM1f717dQosM/04fGnr61MvhPedF",
   render_errors: [accepts: ~w(json)],
   pubsub: [name: LoginService.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+           adapter: Phoenix.PubSub.PG2],
+  server: true
 
 # Configures Elixir's Logger
 config :logger, :console,

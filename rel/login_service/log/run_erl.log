@@ -1,0 +1,8 @@
+run_erl [36100] Thu Feb 18 14:44:55 2016
+Args before exec of shell:
+run_erl [36100] Thu Feb 18 14:44:55 2016
+argv[0] = sh
+run_erl [36100] Thu Feb 18 14:44:55 2016
+argv[1] = -c
+run_erl [36100] Thu Feb 18 14:44:55 2016
+argv[2] = exec "/Users/navinnegi/sites/elixir/login_service/rel/login_service/bin/login_service" "console"

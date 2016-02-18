@@ -9,10 +9,15 @@ defmodule LoginService.UserView do
     %{data: render_one(user, LoginService.UserView, "user.json")}
   end
 
+  def render("token.json", %{token: token}) do
+    %{token: token}
+  end
+
   def render("user.json", %{user: user}) do
     %{id: user.id,
       name: user.name,
       age: user.age,
-      gender: user.gender}
+      gender: user.gender,
+      email: user.email}
   end
 end
