@@ -32,13 +32,16 @@ defmodule LoginService.Mixfile do
   defp deps do
     [{:phoenix, "~> 1.1.4"},
      {:phoenix_ecto, "~> 2.0"},
+     {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:poison, "~> 1.5"},
      {:guardian, "~> 0.9.0"},
      {:comeonin, "~> 2.1"},
      {:mariaex, "~> 0.5"},
-     { :exrm, "~> 0.14.2" }]
+     { :exrm, "~> 0.14.2" },
+     {:arc, "~> 0.3.0"},
+     {:arc_ecto, "~> 0.3.2"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

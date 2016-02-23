@@ -16,6 +16,7 @@ defmodule LoginService.Router do
     get "/user", UserController, :show
     put "/user", UserController, :update
     delete "/user", UserController, :delete
-    # resources "/user", UserController
+    post "/documents", DocumentsController, :upload
+    get "/documents", DocumentsController, :get
   end
 end

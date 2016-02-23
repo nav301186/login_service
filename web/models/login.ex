@@ -3,10 +3,10 @@ defmodule LoginService.Login do
 
   def login(params, repo) do
     IO.puts "**********************"
-    IO.puts params[:email]
+    IO.puts params["email"]
     IO.puts "**********************"
 
-    user = repo.get_by(User, email: params["email"]).first
+    user = repo.get_by(User, email: params["email"])
     case authenticate(user, params["password"]) do
           true -> {:ok, user}
           _ -> {:error, "User Failed to autheticate"}

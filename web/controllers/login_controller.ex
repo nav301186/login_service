@@ -11,8 +11,7 @@ def authenticate(conn, user_params) do
                       |> put_status(:ok)
                       |> put_resp_content_type("application/json")
                       |> json(%{token: jwt})
-    {:error} ->
-                    conn
+    {:error} -> conn
                       |> put_status(:unprocessable_entity)
   end
 end

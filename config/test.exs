@@ -27,3 +27,6 @@ config :login_service, LoginService.Repo,
           verify_issuer: true,
           secret_key: "wWJxTwhe0ccfmgHpNBJTmbd5Zrc2bXvDCa2BtLRW8GjTYaN",
           serializer: LoginService.GuardianSerializer
+
+  config :arc,
+         definition: Arc.Storage.Local

@@ -13,6 +13,16 @@ config :login_service, LoginService.Endpoint,
   check_origin: false,
   watchers: []
 
+  # Watch static and templates for browser reloading.
+  config :login_service, LoginService.Endpoint,
+    live_reload: [
+      patterns: [
+        ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+        ~r{priv/gettext/.*(po)$},
+        ~r{web/views/.*(ex)$},
+        ~r{web/templates/.*(eex)$}
+      ]
+    ]
 
 
 # Do not include metadata nor timestamps in development logs
@@ -42,3 +52,6 @@ config :login_service, LoginService.Repo,
           verify_issuer: true,
           secret_key: "wWJxTwhe0ccfmgHpNBJTmbd5Zrc2bXvDCa2BtLRW8GjTYaN",
           serializer: LoginService.GuardianSerializer
+
+  config :arc,
+          definition: Arc.Storage.Local
