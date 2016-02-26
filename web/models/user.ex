@@ -11,7 +11,6 @@ defmodule LoginService.User do
     field :crypted_password, :string
     field :password, :string, virtual: true
     field :avatar, LoginService.Avatar.Type
-
     timestamps
   end
 

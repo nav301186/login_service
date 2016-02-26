@@ -5,7 +5,7 @@ defmodule LoginService.Avatar do
   # Include ecto support (requires package arc_ecto installed):
   # use Arc.Ecto.Definition
 
-  @versions [:original]
+  # @versions [:original]
 
   # To add a thumbnail version:
   # @versions [:original, :thumb]
@@ -16,9 +16,9 @@ defmodule LoginService.Avatar do
   end
 
   # Define a thumbnail transformation:
-  # def transform(:thumb, _) do
-  #   {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png"}
-  # end
+  def transform(:thumb, _) do
+    {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png"}
+  end
 
   # Override the persisted filenames:
   def filename(version, {file, scope}) do
@@ -40,9 +40,9 @@ defmodule LoginService.Avatar do
   end
 
   # Provide a default URL if there hasn't been a file uploaded
-  # def default_url(version, scope) do
-  #   "/images/avatars/default_#{version}.png"
-  # end
+  def default_url(version, scope) do
+    "/images/avatars/default_#{version}.png"
+  end
 
   # Specify custom headers for s3 objects
   # Available options are [:cache_control, :content_disposition,

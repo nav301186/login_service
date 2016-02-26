@@ -20,6 +20,7 @@ config :login_service, LoginService.Endpoint,
         ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
         ~r{priv/gettext/.*(po)$},
         ~r{web/views/.*(ex)$},
+        ~r{web/controllers/.*(ex)$},
         ~r{web/templates/.*(eex)$}
       ]
     ]
