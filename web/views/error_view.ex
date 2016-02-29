@@ -8,6 +8,9 @@ defmodule LoginService.ErrorView do
   def render("500.json", _assigns) do
     %{errors: %{detail: "Server internal error"}}
   end
+  def render("401.json", _assigns) do
+    %{errors: %{detail: "user authentication failed, ensure that correct authentication token is being sent in the auth header"}}
+  end
 
   # In case no render clause matches or no
   # template is found, let's render it as 500

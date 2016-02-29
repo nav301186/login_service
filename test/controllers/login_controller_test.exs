@@ -15,8 +15,8 @@ defmodule LoginService.LoginControllerTest do
     crypted_password = Comeonin.Bcrypt.hashpwsalt(password)
     user = Repo.insert! %User{email: email, crypted_password: crypted_password}
     # {:ok, jwt, full_claims} = Guardian.encode_and_sign(user, :token)
-    conn = post conn, login_path(conn, :authenticate, %{"email" =>  email,
-     "password" => password})
+    conn = post conn, login_path(conn, :authenticate,%{"user" => %{"email" =>  email,
+     "password" => password}})
      assert json_response(conn, 200)
   end
 end

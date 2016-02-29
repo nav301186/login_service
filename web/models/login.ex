@@ -1,15 +1,13 @@
 defmodule LoginService.Login do
+  require Logger
   alias LoginService.User
 
   def login(params, repo) do
-    IO.puts "**********************"
-    IO.puts params["email"]
-    IO.puts "**********************"
-
     user = repo.get_by(User, email: params["email"])
     case authenticate(user, params["password"]) do
           true -> {:ok, user}
-          _ -> {:error, "User Failed to autheticate"}
+          _ -> Logger.error "failed to authenticate user"
+              {:error, "User Failed to autheticate"}
     end
   end
 

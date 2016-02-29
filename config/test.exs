@@ -14,7 +14,7 @@ config :login_service, LoginService.Repo,
   adapter: Ecto.Adapters.MySQL,
   username: "ums",
   password: "password",
-  database: "ums_development",
+  database: "ums_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 

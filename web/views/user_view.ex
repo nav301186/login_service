@@ -1,12 +1,14 @@
 defmodule LoginService.UserView do
   use LoginService.Web, :view
+  alias LoginService.Avatar
+  alias Comeonin.Bcrypt
 
   def render("index.json", %{users: users}) do
-    %{data: render_many(users, LoginService.UserView, "user.json")}
+    %{profiles: render_many(users, LoginService.UserView, "show.json")}
   end
 
   def render("show.json", %{user: user}) do
-    %{data: render_one(user, LoginService.UserView, "user.json")}
+    %{profile: render_one(user, LoginService.UserView, "user.json")}
   end
 
   def render("token.json", %{token: token}) do
@@ -14,10 +16,14 @@ defmodule LoginService.UserView do
   end
 
   def render("user.json", %{user: user}) do
-    %{id: user.id,
-      name: user.name,
+    %{name: user.name,
       age: user.age,
       gender: user.gender,
-      email: user.email}
+      avatar: generate_url(user)
+    }
+  end
+
+  def generate_url(user) do
+    "/api/documents?isSelf=false&id=" <> to_string(user.id)
   end
 end

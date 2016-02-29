@@ -15,6 +15,7 @@ defmodule LoginService.Router do
     post "/authenticate", LoginController, :authenticate
     get "/user", UserController, :show
     put "/user", UserController, :update
+    get "/profiles", UserController, :filter
     delete "/user", UserController, :delete
     post "/documents", DocumentsController, :upload
     get "/documents", DocumentsController, :get

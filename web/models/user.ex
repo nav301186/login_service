@@ -35,4 +35,8 @@ defmodule LoginService.User do
     # |> validate_length(:password, min: 5)
   end
 
+  # def generate_avatar_url(path) do
+  #    documents_path <> "?token=" <> :token
+  # end
+
 end

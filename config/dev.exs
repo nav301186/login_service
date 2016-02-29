@@ -14,17 +14,17 @@ config :login_service, LoginService.Endpoint,
   watchers: []
 
   # Watch static and templates for browser reloading.
-  config :login_service, LoginService.Endpoint,
-    live_reload: [
-      patterns: [
-        ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
-        ~r{priv/gettext/.*(po)$},
-        ~r{web/views/.*(ex)$},
-        ~r{web/controllers/.*(ex)$},
-        ~r{web/templates/.*(eex)$}
-      ]
-    ]
 
+  # config :login_service, LoginService.Endpoint,
+  #   live_reload: [
+  #     patterns: [
+  #       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+  #       ~r{priv/gettext/.*(po)$},
+  #       ~r{web/views/.*(ex)$},
+  #       ~r{web/controllers/.*(ex)$},
+  #       ~r{web/templates/.*(eex)$}
+  #     ]
+  #   ]
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
