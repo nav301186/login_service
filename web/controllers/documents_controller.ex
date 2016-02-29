@@ -70,14 +70,8 @@ end
 
 defp get_image_path(uri) do
    [path, params] = String.split(uri, "?")
-  path
-end
-
-
-end
-=======
    path
- end
+end
 
- end
->>>>>>> added filter
+
+end
