@@ -8,6 +8,10 @@ use Mix.Config
 # with brunch.io to recompile .js and .css sources.
 config :login_service, LoginService.Endpoint,
   http: [port: 4000],
+  https: [port: 4443,
+          otp_app: :login_service,
+          keyfile: "priv/keys/localhost.key",
+          certfile: "priv/keys/localhost.cert"],
   debug_errors: true,
   code_reloader: false,
   check_origin: false,

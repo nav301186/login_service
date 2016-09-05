@@ -8,7 +8,7 @@ defmodule LoginService.UserView do
   end
 
   def render("show.json", %{user: user}) do
-    %{profile: render_one(user, LoginService.UserView, "user.json")}
+    %{user: render_one(user, LoginService.UserView, "user.json")}
   end
 
   def render("token.json", %{token: token}) do
@@ -18,7 +18,9 @@ defmodule LoginService.UserView do
   def render("user.json", %{user: user}) do
     %{name: user.name,
       age: user.age,
+      email: user.email,
       gender: user.gender,
+      username: user.user_name,
       avatar: generate_url(user)
     }
   end

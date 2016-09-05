@@ -41,7 +41,8 @@ defmodule LoginService.Mixfile do
      {:mariaex, "~> 0.5"},
      { :exrm, "~> 0.14.2" },
      {:arc, "~> 0.3.0"},
-     {:arc_ecto, "~> 0.3.2"}]
+     {:arc_ecto, "~> 0.3.2"},
+     {:cors_plug, "~> 1.1"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

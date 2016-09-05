@@ -15,7 +15,7 @@ defmodule LoginService.User do
   end
 
   @required_fields ~w(email)
-  @optional_fields ~w(name age gender)
+  @optional_fields ~w(name age gender user_name)
 
   @required_file_fields ~w()
   @optional_file_fields ~w(avatar)
