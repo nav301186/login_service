@@ -29,7 +29,9 @@ config :login_service, LoginService.Endpoint,
   #       ~r{web/templates/.*(eex)$}
   #     ]
   #   ]
-
+  # config :plug, :mimes, %{
+  #     "application/json" => ["json-api"]
+  # }
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 

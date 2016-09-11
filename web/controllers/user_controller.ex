@@ -16,7 +16,7 @@ defmodule LoginService.UserController do
 
   def show(conn, _params) do
       token = List.first(get_req_header(conn, "authorization"));
-
+      IO.puts(token)
        case  Guardian.decode_and_verify(token) do
          { :ok, claims } ->
                            case Guardian.serializer.from_token(claims["sub"]) do
@@ -28,7 +28,8 @@ defmodule LoginService.UserController do
                              { :error, reason } -> conn |> put_status(502)
                            end
 
-         { :error, reason } -> conn
+         { :error, reason } ->      IO.inspect reason
+                                    conn
                                     |> put_status(502)
                                     |> render("error.json")
        end

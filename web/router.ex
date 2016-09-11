@@ -13,11 +13,16 @@ defmodule LoginService.Router do
 
     post "/register", RegistrationController, :register
     post "/authenticate", LoginController, :authenticate
-    get "/user", UserController, :show
-    put "/user", UserController, :update
+    get "/users/me", UserController, :show
+    put "/users/me", UserController, :update
     get "/profiles", UserController, :filter
-    delete "/user", UserController, :delete
+    delete "/users/me", UserController, :delete
+    get "/users/me/basicInfo", BasicInfoController, :show
+    # put "/users/me/basicInfo", BasicInfoController, :update
+    # delete "/users/me/basicInfo", BasicInfoController, :delete
+    put "/users/me/basicInfo", BasicInfoController, :create
     post "/documents", DocumentsController, :upload
     get "/documents", DocumentsController, :get
+
   end
 end
