@@ -1,4 +1,4 @@
-defmodule LoginService.BasicInfoController do
+defmodule LoginService.PersnalInformationController do
   import Ecto.Query, only: [from: 2]
   use LoginService.Web, :controller
 
@@ -6,7 +6,6 @@ defmodule LoginService.BasicInfoController do
   alias LoginService.User
   alias LoginService.UserAuthController
   alias LoginService.GuardianHelper
-  alias LoginService.BasicInfo
   alias LoginService.Repo
   alias LoginService.PersnalInformation
 
@@ -58,7 +57,7 @@ defmodule LoginService.BasicInfoController do
                                                    info = Repo.get_by(PersnalInformation, user_id: resource.id)
                                                   conn
                                                   |> put_status(200)
-                                                  |> render("basic_info.json", basic_info: info)
+                                                  |> render("persnal_information.json", basic_info: info)
                            { :error, reason } -> conn |> put_status(:unprocessable_entity)
                          end
 

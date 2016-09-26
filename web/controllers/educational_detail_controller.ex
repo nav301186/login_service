@@ -5,7 +5,7 @@ defmodule LoginService.EducationalDetailController do
   alias LoginService.User
   alias LoginService.UserAuthController
   alias LoginService.GuardianHelper
-  alias LoginService.BasicInfo
+  alias LoginService.PersnalInformation
   alias LoginService.Repo
   alias LoginService.EducationalDetail
 # If the plug cannot find a verified token for the connection,
