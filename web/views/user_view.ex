@@ -12,17 +12,13 @@ defmodule LoginService.UserView do
   end
 
   def render("token.json", %{token: token}) do
-    %{token: token}
+     %{token: token}
   end
 
   def render("user.json", %{user: user}) do
-    %{id: user.id,
-      name: user.name,
-      age: user.age,
+    %{
+      id: user.id,
       email: user.email,
-      gender: user.gender,
-      username: user.user_name,
-      avatar: generate_url(user)
     }
   end
 

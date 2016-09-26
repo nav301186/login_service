@@ -8,9 +8,9 @@ alias LoginService.User
      case  Guardian.decode_and_verify(token) do
        {:ok, claims } ->         IO.puts "token verified"
                                   case Guardian.serializer.from_token(claims["sub"]) do
-                                 {:ok, resource } ->  IO.inspect resource
-                                                      {:ok, Repo.get!(User, resource.id)}
-                                 { :error, reasons } -> { :error, reasons }
+                                 {:ok, resource } ->  {:ok, Repo.get!(User, resource.id)}
+                                 { :error, reasons } -> IO.puts "failed to retrive record"
+                                                          { :error, reasons }
                          end
        { :error, reasons } -> {:error, reasons}
      end

@@ -3,22 +3,17 @@ defmodule LoginService.User do
   use Arc.Ecto.Model
 
   schema "users" do
-    field :name, :string
-    field :age, :integer
-    field :gender, :string
-    field :user_name, :string
     field :email, :string
     field :crypted_password, :string
     field :password, :string, virtual: true
-    field :avatar, LoginService.Avatar.Type
     timestamps
   end
 
   @required_fields ~w(email)
-  @optional_fields ~w(name age gender user_name)
+  @optional_fields ~w()
 
-  @required_file_fields ~w()
-  @optional_file_fields ~w(avatar)
+  # @required_file_fields ~w()
+  # @optional_file_fields ~w(avatar)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -29,7 +24,7 @@ defmodule LoginService.User do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> cast_attachments(params, @required_file_fields, @optional_file_fields)
+    # |> cast_attachments(params, @required_file_fields, @optional_file_fields)
     # |> unique_constraints(:email)
     # |> validate_format(:email, -r/@/)
     # |> validate_length(:password, min: 5)

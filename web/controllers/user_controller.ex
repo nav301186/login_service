@@ -1,5 +1,4 @@
 defmodule LoginService.UserController do
-  @defaults %{"max_age" => 100, "min_age" => 18}
   use LoginService.Web, :controller
 
   alias LoginService.User
@@ -81,26 +80,6 @@ defmodule LoginService.UserController do
   end
 end
 
-def filter(conn, filter_params) do
-  token = List.first(get_req_header(conn, "authorization"));
-
-  IO.inspect conn.query_params
-  %{"max_age" => max, "min_age" => min} = merge_defaults(conn.query_params)
-
- case  UserAuthController.get_user(token) do
-   {:ok, primary_user} ->  IO.puts "Trying to get profiles for  user: " <> primary_user.name <> "..."
-                          IO.inspect primary_user
-                          query = from(u in User, where: u.age > ^min and u.age < ^max and u.gender != ^primary_user.gender)
-                          users = Repo.all query
-                          conn |> put_status(200) |> render("index.json", users: users)
-    {:error, primary_user} ->  render("401.json", %{})
- end
-end
-
-defp merge_defaults(map) do
-  IO.inspect map
-  Map.merge(@defaults, map)
-end
 
 # defp merge_defaults(map) do
 #   Map.merge(@defaults, map, fn _key, default, val -> val || default end)
